@@ -8,7 +8,7 @@ class Programa:
     def likes(self):
         return self._likes
 
-    def dar_like(self):
+    def dar_likes(self):
         self._likes += 1
 
     @property
@@ -16,66 +16,67 @@ class Programa:
         return self._nome
 
     @nome.setter
-    def nome(self, novo_nome):
-        self._nome = novo_nome.title()
+    def nome(self, nome):
+        self._nome = nome
 
-    def imprime(self):
-        print(f' {self._nome} - {self.ano} - {self._likes} Likes')
+    def __str__(self):
+        return f'Nome: {self.nome} Likes: {self.likes}'
 
-class Filme(Programa): #dentro do parentes é a classe mae
+
+class Filme(Programa):  # dentro do parentes é a classe mae
     def __init__(self, nome, ano, duracao):
-        super().__init__(nome, ano) #a  função super chama qualquer metodo da classe mae, chama o inicializador da classe mae
+        super().__init__(nome,
+                         ano)  # a  função super chama qualquer metodo da classe mae, chama o inicializador da classe mae
         self.duracao = duracao
 
-    def __str__(self): # str é uma orientação textual para o elemento
-        return f' {self._nome} - {self.ano} - {self.duracao} min - {self._likes} Likes'
+    def __str__(self):  # str é uma orientação textual para o elemento
+        return f'Nome: {self.nome} - {self.duracao} min - Likes: {self.likes}'
 
 
-class Serie(Programa): #dentro do parentes é a classe mae
+class Serie(Programa):  # dentro do parentes é a classe mae
     def __init__(self, nome, ano, temporadas):
-        super().__init__(nome, ano) #a função super chama qualquer metodo da classe mae, chama o inicializador da classe mae
+        super().__init__(nome,
+                         ano)  # a função super chama qualquer metodo da classe mae, chama o inicializador da classe mae
         self.temporadas = temporadas
 
-    def imprime(self):
-        return f' {self._nome} - {self.ano} - {self.temporadas} temporadas - {self._likes} Likes'
-
-class Playlist(list): #esta herdando de list
-        def __init__(self, nome, programas):
-            self.nome = nome
-            super().__init__(programas) #definindo a lista de programas no inicializador na playlist
+    def __str__(self):
+        return f'Nome: {self.nome} - {self.temporadas} temporadas - Likes: {self.likes}'
 
 
+class Playlist():
+    def __init__(self, nome, programas):
+        self.nome = nome
+        self._programas = programas
+
+    def __getitem__(self, item):  # ter as vantagens de iterável de um list, sem precisar fazer herança
+        return self._programas[item]
+
+    def __len__(self):
+        return len(self._programas)
 
 
 # Nome do filme e serie
 vingadores = Filme('vingadores - guerra infinita', 2018, 160)
-supernatural = Serie('supernatural', 2007, 25)
-tmep = Filme('Todo mundo em pânico', 1999, 100)
-demolidor = Serie('Demolidor', 2016,2)
-
+atlanta = Serie('atlanta', 2018, 2)
+tmep = Filme('todo mundo em panico', 1999, 100)
+demolidor = Serie('demolidor', 2016, 2)
 
 # Quantidade de likes em cada um
-vingadores.dar_like()
-vingadores.dar_like()
-vingadores.dar_like()
-tmep.dar_like()
-tmep.dar_like()
-demolidor.dar_like()
-demolidor.dar_like()
-demolidor.dar_like()
-demolidor.dar_like()
-supernatural.dar_like()
-supernatural.dar_like()
-supernatural.dar_like()
-supernatural.dar_like()
+vingadores.dar_likes()
+vingadores.dar_likes()
+vingadores.dar_likes()
+atlanta.dar_likes()
+atlanta.dar_likes()
+tmep.dar_likes()
+tmep.dar_likes()
+demolidor.dar_likes()
+demolidor.dar_likes()
 
+listinha = [atlanta, vingadores, demolidor, tmep]
+minha_playlist = Playlist('fim de semana', listinha)
 
-filmes_e_series = [vingadores, supernatural, demolidor, tmep]
-playlist_fim_de_semana = Playlist('fim de semana', filmes_e_series)
-
-print(f'Tamanho da playlist: {len(playlist_fim_de_semana)}')
-
-for programa in playlist_fim_de_semana:
+for programa in minha_playlist:
     print(programa)
 
-print(f'Tá ou não tá? {demolidor in playlist_fim_de_semana}')
+print(f'Tamanho: {len(minha_playlist.listagem)}')
+

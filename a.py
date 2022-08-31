@@ -1,51 +1,45 @@
-class Filme:
-    def __init__(self, nome, ano, duracao):
-        self.__nome = nome.title()
-        self.ano = ano
-        self.duracao = duracao
-        self.__likes = 0
+class Funcionario:
+    def __init__(self, nome):
+        self.nome = nome
 
-    @property
-    def likes(self):
-        return self.__likes
+    def registra_horas(self, horas):
+        print('Horas registradas.')
 
-    def dar_likes(self):
-        self.__likes += 1
+    def mostrar_tarefas(self):
+        print('Fez muita coisa...')
 
-    @property
-    def nome(self):
-        return self.__nome
+class Caelum(Funcionario):
+    def mostrar_tarefas(self):
+        print('Fez muita coisa, Caelumer')
 
-    @nome.setter
-    def nome(self, novo_nome):
-        self.__nome = novo_nome.title()
+    def busca_cursos_do_mes(self, mes=None):
+        print(f'Mostrando cursos - {mes}' if mes else 'Mostrando cursos desse mês')
 
+class Alura(Funcionario):
+    def mostrar_tarefas(self):
+        print('Fez muita coisa, Alurete!')
 
-class Serie:
-    def __init__(self, nome, ano, temporadas):
-        self.__nome = nome.title()
-        self.ano = ano
-        self.temporadas = temporadas
-        self.__likes = 0
+    def busca_perguntas_sem_resposta(self):
+        print('Mostrando perguntas não respondidas do fórum')
 
-    @property
-    def likes(self):
-        return self.__likes
-
-    def dar_likes(self):
-        self.__likes += 1
-
-    @property
-    def nome(self):
-        return self.__nome
-
-    @nome.setter
-    def nome(self, novo_nome):
-        self.__nome = novo_nome.title()
+class Hipster:
+    def __str__(self):
+        return f'Hipster,  {self.nome}'
 
 
-vingadores = Filme('vingadores - guerra infinita', 2018, 160)
-print(vingadores.nome)
+class Junior(Alura):
+    pass
 
-atlanta = Serie('atlanta', 2018, 2)
-print(f'Nome: {atlanta.nome} - Ano: {atlanta.ano}')
+class Pleno(Alura, Caelum, Hipster):
+    pass
+
+jose = Junior()
+jose.busca_perguntas_sem_resposta()
+
+luan = Pleno()
+luan.busca_perguntas_sem_resposta()
+luan.busca_cursos_do_mes()
+
+luan.mostrar_tarefas()
+
+print(luan)
